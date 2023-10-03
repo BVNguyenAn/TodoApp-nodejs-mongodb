@@ -1,0 +1,10 @@
+.App {
+  text-align: center;
+}
+.containTodo{
+  margin-bottom: 10px;
+}
+.singleTodo{
+  display: inline;
+  padding: 10px;
+}
