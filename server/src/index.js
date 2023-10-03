@@ -18,7 +18,7 @@ app.post('/todo', (req, res) => {
   })
 })
 
-app.post('/deleteTodo', async (req, res) => {
+app.post('/deleteTodo/:id', async (req, res) => {
   const todoId = req.body.id;
   try {
     const result = await Todo.deleteOne({ _id: todoId });
@@ -34,6 +34,32 @@ app.post('/deleteTodo', async (req, res) => {
     res.status(500).send('Error deleting todo');
   }
 });
+
+app.post('/editing/:id', (req, res) => {
+  const todoId = req.params.id;
+  async function updateTodoById(id, updatedData) {
+    try {
+      await Todo.findByIdAndUpdate(
+        id,
+        updatedData,
+        { new: true }
+      );
+    } catch (error) {
+      console.error('Error updating todo:', error);
+    }
+  }
+  updateTodoById(todoId, {
+    isEditting: true,
+  });
+})
+
+app.patch('/edit/:id', (req, res) => {
+  console.log(req.body);
+  Todo.findByIdAndUpdate(req.params.id, req.body, {new: true}).then((blog) => {
+    res.send(blog);
+  })
+  console.log(req.body);
+})
 
 app.get('/getTodo', (req, res) => {
   Todo.find({}).then((blogs) => {
