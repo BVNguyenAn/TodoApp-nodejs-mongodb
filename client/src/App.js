@@ -3,7 +3,7 @@ import axios from 'axios';
 import { Icon } from '@iconify/react';
 import "./App.css";
 import SingleTodo from "./components/singleTodo";
-
+import EditTodo from "./components/editTodo";
 function App() {
   const [todo, setTodo] = useState('')
   const [newTodo, setNewTodo] = useState('')
@@ -26,13 +26,10 @@ function App() {
         console.error('Error:', error);
       });
   }
-  useEffect(() => {
     getListTodo();
-  }, []);
   // fuction submit 
   const handleSubmit = (e) => {
     e.preventDefault()
-    getListTodo();
     // post data to database
     axiosInstance.post('/todo',{
       todo: todo,
@@ -40,38 +37,23 @@ function App() {
     }).then((res) =>{
       console.log(res);
     })    
-    getListTodo();
     setTodo('')
 
   }
   // function delete
   const handleDelete = (id) => {
-    getListTodo();
     axiosInstance.post('/deleteTodo/' + id,{
       id: id
     })
     console.log(id);
-    getListTodo();
   }
   // function setEditing
   const setEditing = (todo) => {
     setNewTodo(todo.todo)
-    getListTodo();
     axiosInstance.post('/editing/' + todo._id,{
       isEditting: true
     })
-    getListTodo();
   }
-  // function handleDelete
-  const handleEdit = (e, todo) => {
-    e.preventDefault()
-    getListTodo()
-    axiosInstance.patch('/edit/' + todo._id , {
-        todo: newTodo,
-        isEditting: false
-    })
-    getListTodo()
-}
   return (
 <div className="container">
       <div className="app">
@@ -85,12 +67,7 @@ function App() {
             listTodo.map((todo, index) => {
               if(todo.isEditting){
                 return(
-                  <div className="editInp">
-                  <form onSubmit={(e) => handleEdit(e, todo)}>
-                      <input required={true} placeholder='your new task' value={newTodo} onChange={(e) => setNewTodo(e.target.value)}/>
-                      <button className="changeBtn" type='submit'>change</button>
-                  </form>
-                </div>
+                  <EditTodo data={todo}/>
                 )
               }else{
                 return(
