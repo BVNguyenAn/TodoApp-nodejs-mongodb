@@ -9,7 +9,7 @@ function App() {
   const [newTodo, setNewTodo] = useState('')
   const [listTodo, setListTodo] = useState([])
   const axiosInstance = axios.create({
-    baseURL: 'http://localhost:8000',
+    baseURL: 'https://backend-b2al.onrender.com/',
   });
 //get the list of todo
   const getListTodo =() => {

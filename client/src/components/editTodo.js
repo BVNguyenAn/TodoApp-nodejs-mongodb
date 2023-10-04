@@ -4,7 +4,7 @@ import { useState } from 'react';
 
 const EditTodo = (todo) => {
     const axiosInstance = axios.create({
-        baseURL: 'http://localhost:8000',
+        baseURL: 'https://backend-b2al.onrender.com/',
       });
     const [newTodo, setNewTodo] = useState(todo.data.todo)
     const handleEdit = (e) => {
