@@ -66,6 +66,6 @@ app.get('/getTodo', (req, res) => {
     res.send(blogs)
   })
 })
-app.listen(8000, () => {
+app.listen(433, () => {
   console.log(`Server is running on port 8000.`);
 });
