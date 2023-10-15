@@ -1,35 +1,59 @@
-import React, { useState, useEffect } from "react";  
+import React, { useEffect, useState } from "react";  
 import axios from 'axios';
 import { Icon } from '@iconify/react';
 import "./App.css";
 import SingleTodo from "./components/singleTodo";
 import EditTodo from "./components/editTodo";
+import { useDispatch } from "react-redux";
+import { GetTodoAction } from "./redux/action/action";
+import { store } from "./redux/store";
 function App() {
   const [todo, setTodo] = useState('')
-  const [newTodo, setNewTodo] = useState('')
-  const [listTodo, setListTodo] = useState([])
+  const dispatch = useDispatch()
   const axiosInstance = axios.create({
-    baseURL: 'https://backend-b2al.onrender.com/',
+    baseURL: 'http://localhost:433',
   });
 //get the list of todo
   const getListTodo =() => {
-    //define url
 
     //get Todo function
     axiosInstance.get('/getTodo')
       .then(response => {
-        const ContainTodo = response.data
-        setListTodo(ContainTodo)
+        dispatch(GetTodoAction(response.data))
+        console.log('daco');
       })
       .catch(error => {
         // if err happen => log
         console.error('Error:', error);
       });
   }
-    getListTodo();
+    useEffect(() => {
+      getListTodo();
+      console.log(1);
+    }, [])
+  // map the list of todo to render 
+  console.log(store.getState());
+  const todos = store.getState()
+  
+  const todoElements = todos.map((todo, index) => {
+      if(todo.isEditting){
+        return(
+          <EditTodo key={index} data={todo}/>
+        )
+      }else{
+        return(
+          <div className="containTodo" key={index}>
+          <SingleTodo data={todo.todo}/>
+          <button className="editBtn" onClick={() => setEditing(todo)}><Icon icon="uil:edit" /></button>
+          <button className="deleteBtn" onClick={() => handleDelete(todo._id)}><Icon icon="mdi:bin" /></button>
+          </div>
+        )
+      }
+    })
   // fuction submit 
   const handleSubmit = (e) => {
     e.preventDefault()
+    getListTodo();
     // post data to database
     axiosInstance.post('/todo',{
       todo: todo,
@@ -38,21 +62,22 @@ function App() {
       console.log(res);
     })    
     setTodo('')
-
+    getListTodo();
   }
   // function delete
   const handleDelete = (id) => {
-    axiosInstance.post('/deleteTodo/' + id,{
-      id: id
-    })
+    getListTodo();
+    axiosInstance.delete('/deleteTodo/' + id)
     console.log(id);
+    getListTodo();
   }
   // function setEditing
   const setEditing = (todo) => {
-    setNewTodo(todo.todo)
+    getListTodo();
     axiosInstance.post('/editing/' + todo._id,{
       isEditting: true
     })
+    getListTodo();
   }
   return (
 <div className="container">
@@ -63,23 +88,7 @@ function App() {
           <button className="submitBtn" type="submit">Add Task</button>
         </form>
         <div className="ListTodo">
-          {
-            listTodo.map((todo, index) => {
-              if(todo.isEditting){
-                return(
-                  <EditTodo data={todo}/>
-                )
-              }else{
-                return(
-                  <div className="containTodo" key={index}>
-                  <SingleTodo data={todo.todo}/>
-                  <button className="editBtn" onClick={() => setEditing(todo)}><Icon icon="uil:edit" /></button>
-                  <button className="deleteBtn" onClick={() => handleDelete(todo._id)}><Icon icon="mdi:bin" /></button>
-                  </div>
-                )
-              }
-            })
-          }
+          {todoElements}
         </div>
       </div>
 </div>

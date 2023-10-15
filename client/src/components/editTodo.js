@@ -4,15 +4,15 @@ import { useState } from 'react';
 
 const EditTodo = (todo) => {
     const axiosInstance = axios.create({
-        baseURL: 'https://backend-b2al.onrender.com/',
+        baseURL: 'http://localhost:433',
       });
     const [newTodo, setNewTodo] = useState(todo.data.todo)
     const handleEdit = (e) => {
         e.preventDefault()
-        axiosInstance.patch('/edit/' + todo.data._id , {
+        axiosInstance.put('/edit/' + todo.data._id , {
             todo: newTodo,
             isEditting: false
-        })
+        })  
     }
   return (
     <div className="editInp"key={todo.data._id}>

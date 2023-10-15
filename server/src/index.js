@@ -18,8 +18,8 @@ app.post('/todo', (req, res) => {
   })
 })
 
-app.post('/deleteTodo/:id', async (req, res) => {
-  const todoId = req.body.id;
+app.delete('/deleteTodo/:id', async (req, res) => {
+  const todoId = req.params.id;
   try {
     const result = await Todo.deleteOne({ _id: todoId });
     if (result.deletedCount === 1) {
@@ -53,7 +53,7 @@ app.post('/editing/:id', (req, res) => {
   });
 })
 
-app.patch('/edit/:id', (req, res) => {
+app.put('/edit/:id', (req, res) => {
   console.log(req.body);
   Todo.findByIdAndUpdate(req.params.id, req.body, {new: true}).then((blog) => {
     res.send(blog);
