@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 import { EditTodoAction } from '../redux/action/action';
 const EditTodo = (todo) => {
     const axiosInstance = axios.create({
-        baseURL: 'https://backend-b2al.onrender.com:433',
+        baseURL: 'https://backend-b2al.onrender.com',
       });
     const [newTodo, setNewTodo] = useState(todo.data.todo)
     const dispatch = useDispatch()
