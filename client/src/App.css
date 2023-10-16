@@ -97,3 +97,28 @@
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   cursor: pointer;
 }
+/* responsive */
+
+/* for mobile */
+@media (max-width: 480px) {
+  .app {
+      width: 100%;
+  }
+}
+/* end for mobile */
+
+/* for tablet */
+@media (max-width: 768px){
+  .app {
+    width: 70%;
+  }
+}
+/* end for tablet */
+
+/* for small  screen*/
+@media (max-width: 1024px){
+  .app{
+    width: 70%;
+  }
+}
+/* end */
