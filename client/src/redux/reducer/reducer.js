@@ -6,6 +6,8 @@ const reducer = (state, action) => {
             return action.payload
         case 'DELETE_TODO':
             return action.payload
+        case 'SETEDIT_TODO':
+            return action.payload
         case 'EDIT_TODO':
             return action.payload
         default:

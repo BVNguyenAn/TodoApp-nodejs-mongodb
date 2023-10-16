@@ -4,9 +4,8 @@ import { Icon } from '@iconify/react';
 import "./App.css";
 import SingleTodo from "./components/singleTodo";
 import EditTodo from "./components/editTodo";
-import { useDispatch } from "react-redux";
-import { GetTodoAction } from "./redux/action/action";
-import { store } from "./redux/store";
+import { useDispatch, useSelector } from "react-redux";
+import { AddTodoAction, DeleteTodoAction, GetTodoAction, SetEditingTodoAction } from "./redux/action/action";
 function App() {
   const [todo, setTodo] = useState('')
   const dispatch = useDispatch()
@@ -20,7 +19,7 @@ function App() {
     axiosInstance.get('/getTodo')
       .then(response => {
         dispatch(GetTodoAction(response.data))
-        console.log('dispatch');
+
       })
       .catch(error => {
         // if err happen => log
@@ -29,38 +28,35 @@ function App() {
   }
     useEffect(() => {
       getListTodo();
-      console.log('useEffect');
+      // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
   // fuction submit 
   const handleSubmit = (e) => {
     e.preventDefault()
-    getListTodo();
     // post data to database
     axiosInstance.post('/todo',{
       todo: todo,
       isEditting: false
     }).then((res) =>{
-      console.log(res);
+      console.log(res.data._id);
+      dispatch(AddTodoAction(res.data.todo, res.data._id))
     })    
     setTodo('')
-    getListTodo();
   }
   // function delete
   const handleDelete = (id) => {
-    getListTodo();
     axiosInstance.delete('/deleteTodo/' + id)
-    console.log(id);
-    getListTodo();
+    dispatch(DeleteTodoAction(id))
   }
   // function setEditing
   const setEditing = (todo) => {
-    getListTodo();
     axiosInstance.post('/editing/' + todo._id,{
       isEditting: true
     })
-    getListTodo();
+    dispatch(SetEditingTodoAction(todo._id))  
   }
-  const todos = store.getState()
+
+  const todos = useSelector(state => state)
   return (
 <div className="container">
       <div className="app">

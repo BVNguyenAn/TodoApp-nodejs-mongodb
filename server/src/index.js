@@ -67,5 +67,5 @@ app.get('/getTodo', (req, res) => {
   })
 })
 app.listen(433, () => {
-  console.log(`Server is running on port 8000.`);
+  console.log(`Server is running on port 433.`);
 });
