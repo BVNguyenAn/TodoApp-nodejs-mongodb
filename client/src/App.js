@@ -20,7 +20,7 @@ function App() {
     axiosInstance.get('/getTodo')
       .then(response => {
         dispatch(GetTodoAction(response.data))
-        console.log('daco');
+        console.log('dispatch');
       })
       .catch(error => {
         // if err happen => log
@@ -29,12 +29,12 @@ function App() {
   }
     useEffect(() => {
       getListTodo();
-      console.log(1);
+      console.log('useEffect');
     }, [])
   // map the list of todo to render 
   console.log(store.getState());
   const todos = store.getState()
-  
+  console.log('map');
   const todoElements = todos.map((todo, index) => {
       if(todo.isEditting){
         return(
