@@ -31,25 +31,6 @@ function App() {
       getListTodo();
       console.log('useEffect');
     }, [])
-  // map the list of todo to render 
-  console.log(store.getState());
-  const todos = store.getState()
-  console.log('map');
-  const todoElements = todos.map((todo, index) => {
-      if(todo.isEditting){
-        return(
-          <EditTodo key={index} data={todo}/>
-        )
-      }else{
-        return(
-          <div className="containTodo" key={index}>
-          <SingleTodo data={todo.todo}/>
-          <button className="editBtn" onClick={() => setEditing(todo)}><Icon icon="uil:edit" /></button>
-          <button className="deleteBtn" onClick={() => handleDelete(todo._id)}><Icon icon="mdi:bin" /></button>
-          </div>
-        )
-      }
-    })
   // fuction submit 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -79,6 +60,7 @@ function App() {
     })
     getListTodo();
   }
+  const todos = store.getState()
   return (
 <div className="container">
       <div className="app">
@@ -88,7 +70,23 @@ function App() {
           <button className="submitBtn" type="submit">Add Task</button>
         </form>
         <div className="ListTodo">
-          {todoElements}
+          {
+            todos.map((todo, index) => {
+              if(todo.isEditting){
+                return(
+                  <EditTodo key={index} data={todo}/>
+                )
+              }else{
+                return(
+                  <div className="containTodo" key={index}>
+                  <SingleTodo data={todo.todo}/>
+                  <button className="editBtn" onClick={() => setEditing(todo)}><Icon icon="uil:edit" /></button>
+                  <button className="deleteBtn" onClick={() => handleDelete(todo._id)}><Icon icon="mdi:bin" /></button>
+                  </div>
+                )
+              }
+            })
+          }
         </div>
       </div>
 </div>
