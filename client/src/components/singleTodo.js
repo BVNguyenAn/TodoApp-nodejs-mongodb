@@ -2,8 +2,8 @@ import React from 'react'
 
 const SingleTodo = (todo) => {
   return (
-    <div className='singleTodo'>
-        <p className='todoText'>{todo.data}</p>
+    <div className='single-todo'>
+        <p className='todo-text'>{todo.data}</p>
         </div>
   )
 }

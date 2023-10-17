@@ -1,12 +1,12 @@
 
 
-export const GetTodoAction = (todo) => (dispatch, getState) =>{
+export const getTodoAction = (todo) => (dispatch, getState) =>{
         dispatch({
             type: 'GET_TODO',
             payload: todo
         })
 };
-export const AddTodoAction = (todo, id) => (dispatch, getState) => {
+export const addTodoAction = (todo, id) => (dispatch, getState) => {
     const todos = getState()
     dispatch({
         type: 'ADD_TODO',
@@ -14,14 +14,14 @@ export const AddTodoAction = (todo, id) => (dispatch, getState) => {
     })
     console.log(getState());
 }
-export const DeleteTodoAction = (id) => (dispatch, getState) => {
+export const deleteTodoAction = (id) => (dispatch, getState) => {
     const todos = getState()
     dispatch({
         type: 'DELETE_TODO',
         payload: todos.filter(t => t._id !== id)
     })
 }
-export const SetEditingTodoAction = (id) => (dispatch, getState) => {
+export const setEditingTodoAction = (id) => (dispatch, getState) => {
     const todos = getState()
     const todoClicked = todos.findIndex((obj => obj._id === id))
     todos[todoClicked].isEditting = true
@@ -31,7 +31,7 @@ export const SetEditingTodoAction = (id) => (dispatch, getState) => {
     })
     console.log('set ok');
 }
-export const EditTodoAction = (todo, id) => (dispatch, getState) => {
+export const editTodoAction = (todo, id) => (dispatch, getState) => {
     const todos = getState()
     const editingTodo = todos.findIndex((obj => obj._id === id))
     todos[editingTodo].todo = todo

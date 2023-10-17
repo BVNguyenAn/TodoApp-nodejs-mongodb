@@ -1,7 +1,7 @@
 require('./database/mongoose')
 const express = require("express");
 const cors = require("cors");
-const Todo = require('./models/todo')
+const TodoModel = require('./models/todo')
 
 const app = express();
 
@@ -9,7 +9,7 @@ app.use(cors());
 app.use(express.json());
 
 app.post('/todo', (req, res) => {
-  const todo = new Todo(req.body)
+  const todo = new TodoModel(req.body)
   todo.save().then((todo) => {
     console.log(`added: ${todo.todo}`);
     res.status(201).send(todo)
@@ -35,11 +35,11 @@ app.delete('/deleteTodo/:id', async (req, res) => {
   }
 });
 
-app.post('/editing/:id', (req, res) => {
+app.put('/editing/:id', (req, res) => {
   const todoId = req.params.id;
   async function updateTodoById(id, updatedData) {
     try {
-      await Todo.findByIdAndUpdate(
+      await TodoModel.findByIdAndUpdate(
         id,
         updatedData,
         { new: true }
@@ -55,14 +55,14 @@ app.post('/editing/:id', (req, res) => {
 
 app.put('/edit/:id', (req, res) => {
   console.log(req.body);
-  Todo.findByIdAndUpdate(req.params.id, req.body, {new: true}).then((blog) => {
+  TodoModel.findByIdAndUpdate(req.params.id, req.body, {new: true}).then((blog) => {
     res.send(blog);
   })
   console.log(req.body);
 })
 
 app.get('/getTodo', (req, res) => {
-  Todo.find({}).then((blogs) => {
+  TodoModel.find({}).then((blogs) => {
     res.send(blogs)
   })
 })

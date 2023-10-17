@@ -5,7 +5,7 @@ import "./App.css";
 import SingleTodo from "./components/singleTodo";
 import EditTodo from "./components/editTodo";
 import { useDispatch, useSelector } from "react-redux";
-import { AddTodoAction, DeleteTodoAction, GetTodoAction, SetEditingTodoAction } from "./redux/action/action";
+import { addTodoAction, deleteTodoAction, getTodoAction, setEditingTodoAction } from "./redux/action/action";
 function App() {
   const [todo, setTodo] = useState('')
   const dispatch = useDispatch()
@@ -18,7 +18,7 @@ function App() {
     //get Todo function
     axiosInstance.get('/getTodo')
       .then(response => {
-        dispatch(GetTodoAction(response.data))
+        dispatch(getTodoAction(response.data))
 
       })
       .catch(error => {
@@ -39,21 +39,21 @@ function App() {
       isEditting: false
     }).then((res) =>{
       console.log(res.data._id);
-      dispatch(AddTodoAction(res.data.todo, res.data._id))
+      dispatch(addTodoAction(res.data.todo, res.data._id))
     })    
     setTodo('')
   }
   // function delete
   const handleDelete = (id) => {
     axiosInstance.delete('/deleteTodo/' + id)
-    dispatch(DeleteTodoAction(id))
+    dispatch(deleteTodoAction(id))
   }
   // function setEditing
   const setEditing = (todo) => {
-    axiosInstance.post('/editing/' + todo._id,{
+    axiosInstance.put('/editing/' + todo._id,{
       isEditting: true
     })
-    dispatch(SetEditingTodoAction(todo._id))  
+    dispatch(setEditingTodoAction(todo._id))  
   }
 
   const todos = useSelector(state => state)
@@ -62,10 +62,10 @@ function App() {
       <div className="app">
         <h1 className="title">GET THING DONE!</h1>
         <form onSubmit={(e) => handleSubmit(e)}>
-          <input className="inpTodo" placeholder="What is the task today?" required={true} value={todo} onChange={(e) => setTodo(e.target.value)}/>
-          <button className="submitBtn" type="submit">Add Task</button>
+          <input className="inp-todo" placeholder="What is the task today?" required={true} value={todo} onChange={(e) => setTodo(e.target.value)}/>
+          <button className="submit-btn" type="submit">Add Task</button>
         </form>
-        <div className="ListTodo">
+        <div className="list-todo">
           {
             todos.map((todo, index) => {
               if(todo.isEditting){
@@ -74,10 +74,10 @@ function App() {
                 )
               }else{
                 return(
-                  <div className="containTodo" key={index}>
+                  <div className="contain-todo" key={index}>
                   <SingleTodo data={todo.todo}/>
-                  <button className="editBtn" onClick={() => setEditing(todo)}><Icon icon="uil:edit" /></button>
-                  <button className="deleteBtn" onClick={() => handleDelete(todo._id)}><Icon icon="mdi:bin" /></button>
+                  <button className="edit-btn" onClick={() => setEditing(todo)}><Icon icon="uil:edit" /></button>
+                  <button className="delete-btn" onClick={() => handleDelete(todo._id)}><Icon icon="mdi:bin" /></button>
                   </div>
                 )
               }

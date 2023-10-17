@@ -16,7 +16,7 @@
 .title{
   color: white;
 }
-.inpTodo{
+.inp-todo{
   background-color: #1a1a40;
   border: 1px solid #8758ff;
   height: 30px;
@@ -28,10 +28,10 @@
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   margin-bottom: 30px;
 }
-.inpTodo:focus{
+.inp-todo:focus{
   outline: none;
 }
-.submitBtn{
+.submit-btn{
   background-color: #8758ff;
   border: none;
   color: white;
@@ -40,10 +40,10 @@
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   cursor: pointer;
 }
-.ListTodo{
+.list-todo{
   padding-bottom: 30px;
 }
-.singleTodo{
+.single-todo{
   display: inline-block;
   padding: 10px;
   background-color: #8758ff;
@@ -52,11 +52,11 @@
   border-bottom-left-radius: 10px;
   min-width: 55%;
 }
-.todoText{
+.todo-text{
   margin: 0;
   float: left;
 }
-.deleteBtn, .editBtn{
+.delete-btn, .edit-btn{
   background-color: #8758ff;
   border: none;
   position: relative;
@@ -68,11 +68,11 @@
   cursor: pointer;
   line-height: 41px;
 }
-.deleteBtn{
+.delete-btn{
   border-top-right-radius: 10px;
   border-bottom-right-radius: 10px;
 }
-.editInp input{ 
+.edit-inp input{ 
   background-color: #1a1a40;
   border: 1px solid #8758ff;
   height: 30px;
@@ -85,10 +85,10 @@
   margin-bottom: 30px;
 
 }
-.editInp input:focus {
+.edit-inp input:focus {
   outline: none;
 }
-.changeBtn{
+.change-btn{
   background-color: #8758ff;
   border: none;
   color: white;
